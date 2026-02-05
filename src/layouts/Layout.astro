@@ -13,9 +13,58 @@ const { title = "Dev Portfolio" } = Astro.props;
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body class="bg-[--color-dark-bg] text-[--color-soft-white] antialiased font-sans">
-    <main>
+  <body class="bg-[--color-dark-bg] text-[--color-soft-white] antialiased selection:bg-[--color-accent]/30">
+    <div 
+      id="global-spotlight"
+      class="pointer-events-none fixed inset-0 z-30 transition duration-300"
+      style="background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(59, 130, 246, 0.1), transparent 40%);"
+    >
+    </div>
+    
+    <main class="relative z-40">
       <slot />
     </main>
+
+    <script>
+      // Función para inicializar el observador
+      const setupReveal = () => {
+        const observerOptions = {
+          threshold: 0.1, // Se activa cuando el 10% del elemento es visible
+          rootMargin: '0px 0px -50px 0px' // Se activa un poco antes de que llegue al borde
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              // Si quieres que solo se anime una vez, deja de observar:
+              // observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Buscamos todos los elementos con la clase 'reveal'
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach((el) => observer.observe(el));
+      };
+
+      // Ejecutar al cargar y cada vez que Astro cambie de página (View Transitions)
+      document.addEventListener('astro:page-load', setupReveal);
+    </script>
+
+    <script>
+      // Manejador del mouse global
+      const updateSpotlight = (e: { clientX: any; clientY: any; }) => {
+        // Usamos clientX/Y para que sea relativo a la ventana (viewport)
+        // y funcione perfectamente con el 'fixed' del div
+        document.documentElement.style.setProperty('--x', `${e.clientX}px`);
+        document.documentElement.style.setProperty('--y', `${e.clientY}px`);
+      };
+
+      // Escuchamos el evento de carga de Astro para que funcione con ViewTransitions
+      document.addEventListener('astro:page-load', () => {
+        window.addEventListener('mousemove', updateSpotlight);
+      });
+    </script>
   </body>
 </html>

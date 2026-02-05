@@ -48,13 +48,13 @@ const projects = [
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {projects.map((project) => (
+    {projects.map((project, index) => (
       <ProjectCard 
         title={project.title}
         description={project.description}
         tags={project.tags}
         link={project.link}
-        class={project.size}
+        class={`${project.size} reveal reveal-delay-${index % 3}`}
       />
     ))}
   </div>
