@@ -1,0 +1,61 @@
+---
+// src/components/ProjectList.astro
+import ProjectCard from './ProjectCard.astro';
+
+const projects = [
+  {
+    title: "E-commerce OS",
+    description: "Sistema de diseño para plataformas de alto tráfico con enfoque en performance.",
+    tags: ["Astro", "Tailwind v4", "React"],
+    link: "#",
+    size: "md:col-span-2 md:row-span-2" // El destacado
+  },
+  {
+    title: "Neural Interface",
+    description: "Landing page con interacciones WebGL.",
+    tags: ["Three.js", "GSAP"],
+    link: "#",
+    size: "md:col-span-1"
+  },
+  {
+    title: "SaaS Dashboard",
+    description: "Visualización de datos complejos en tiempo real.",
+    tags: ["TypeScript", "D3.js"],
+    link: "#",
+    size: "md:col-span-1"
+  },
+  {
+    title: "Minimal Studio",
+    description: "Portafolio para agencia de diseño creativo.",
+    tags: ["Astro", "Framer Motion"],
+    link: "#",
+    size: "md:col-span-3" // Ocupa todo el ancho abajo
+  }
+];
+---
+
+<section id="proyectos" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 text-[--color-accent] font-mono text-sm">
+        <span class="w-8 h-px bg-[--color-accent]"></span>
+        TRABAJOS SELECCIONADOS
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tighter">
+        Proyectos que <span class="text-gray-500">marcan la diferencia.</span>
+      </h2>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {projects.map((project) => (
+      <ProjectCard 
+        title={project.title}
+        description={project.description}
+        tags={project.tags}
+        link={project.link}
+        class={project.size}
+      />
+    ))}
+  </div>
+</section>
