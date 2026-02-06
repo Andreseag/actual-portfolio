@@ -2,7 +2,15 @@
 // src/layouts/MainLayout.astro
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css'; // Asegúrate de importar tu CSS aquí
-const { title = "Dev Portfolio" } = Astro.props;
+interface Props {
+  title: string;
+  description?: string; // La hacemos opcional con un valor por defecto
+}
+
+const { 
+  title, 
+  description = "Frontend Lead & Creative Developer especializado en Astro, Go y Node.js. Diseño experiencias digitales de alto rendimiento." 
+} = Astro.props;
 ---
 
 <html lang="es">
@@ -11,6 +19,20 @@ const { title = "Dev Portfolio" } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.png" /> <meta property="og:site_name" content="Andres Castro Portfolio" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <ViewTransitions />
   </head>
   <body class="bg-[--color-dark-bg] text-[--color-soft-white] antialiased selection:bg-[--color-accent]/30">
