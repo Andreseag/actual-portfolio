@@ -1,61 +1,105 @@
 ---
 // src/components/ProjectList.astro
-import ProjectCard from './ProjectCard.astro';
+import { Image } from 'astro:assets';
+
+// Importamos las imágenes localmente para que Astro las optimice (WebP/AVIF automático)
+import imgProyecto1 from '../assets/proyecto-neivor.png';
+import imgProyecto2 from '../assets/proyecto-quick.png';
+import imgProyecto3 from '../assets/proyecto-vivaleer.png';
+import imgProyecto4 from '../assets/proyecto-achs.png';
 
 const projects = [
   {
-    title: "Achs",
-    description: "La ACHS (Asociación Chilena de Seguridad) es una mutualidad privada sin fines de lucro que se encarga de la seguridad y salud en el trabajo en Chile",
-    tags: ["Astro", "Tailwind v4", "React"],
-    link: "https://www.achs.cl/",
-    size: "md:col-span-2 md:row-span-2" // El destacado
+    title: "Neivor PropTech Platform",
+    description: "Optimización del flujo de pagos y UI components para la gestión de condominios en Latam.",
+    tags: ["Vuejs", "TypeScript", "Tailwind", "Flutter"],
+    link: "neivor-platform",
+    image: imgProyecto1,
+    alt: "Dashboard interactivo de Neivor"
   },
   {
-    title: "Viva Leer",
-    description: "Viva Leer es el programa de fomento a la lectura de Copec, desarrollado en conjunto con la Fundación La Fuente y acogido a la Ley de Donaciones Culturales en Chile.",
-    tags: ["Three.js", "GSAP"],
-    link: "https://qa.vivaleercopec.cl/",
-    size: "md:col-span-1"
+    title: "Quick Logistics TMS",
+    description: "Desarrollo del sistema de ruteo inteligente en tiempo real y tracking de última milla.",
+    tags: ["React", "Javascript", "Tailwind v4"],
+    link: "quick-logistics",
+    image: imgProyecto2,
+    alt: "Interfaz de monitoreo de Quick Logistics"
   },
   {
-    title: "Neivor",
-    description: "Neivor es una plataforma tecnológica (una PropTech) diseñada para transformar la gestión de condominios, edificios y propiedades en renta en América Latina.",
-    tags: ["TypeScript", "D3.js"],
-    link: "https://www.neivor.com/",
-    size: "md:col-span-1"
+    title: "Viva Leer Copec Digital",
+    description: "Plataforma educativa y catálogo de cuentos interactivos de alto rendimiento.",
+    tags: ["Nextjs", "Wordpress", "Tailwind v4"],
+    link: "viva-leer-copec",
+    image: imgProyecto3,
+    alt: "Plataforma web de Viva Leer Copec"
   },
   {
-    title: "Quick",
-    description: "Quick (quick.com.co) es una plataforma tecnológica de logística 100% colombiana que ha revolucionado el sector del transporte y la distribución en Latinoamérica y Estados Unidos.",
-    tags: ["Astro", "Framer Motion"],
-    link: "https://quick.com.co/",
-    size: "md:col-span-3" // Ocupa todo el ancho abajo
-  }
+    title: "Plataformas ACHS",
+    description: "Creación de funcionalidades en las direntes plataformas de la Aseguradora ACHS en chile.",
+    tags: ["Javascript", "Bootstrap", "Sitefinity"],
+    link: "plataformas-achs",
+    image: imgProyecto4,
+    alt: "Dashboard interactivo de Neivor"
+  },
 ];
 ---
 
-<section id="proyectos" class="max-w-6xl mx-auto px-6 py-24">
-  <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-    <div class="space-y-4">
-      <div class="flex items-center gap-2 text-[--color-accent] font-mono text-sm">
-        <span class="w-8 h-px bg-[--color-accent]"></span>
-        TRABAJOS SELECCIONADOS
-      </div>
-      <h2 class="text-4xl md:text-5xl font-bold tracking-tighter">
-        Proyectos que <span class="text-gray-500">marcan la diferencia.</span>
-      </h2>
+<section class="max-w-6xl mx-auto px-6 py-24" id="proyectos">
+  <div class="space-y-12">
+    <!-- Encabezado -->
+    <div class="space-y-2">
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tighter">Proyectos <span class="text-gray-500">Destacados</span></h2>
+      <p class="text-gray-400 max-w-md">Soluciones de software robustas con un enfoque obsesivo en la performance.</p>
     </div>
-  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {projects.map((project, index) => (
-      <ProjectCard 
-        title={project.title}
-        description={project.description}
-        tags={project.tags}
-        link={project.link}
-        class={`${project.size} reveal reveal-delay-${index % 3}`}
-      />
-    ))}
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project, index) => (
+        <a href={`proyectos/${project.link}`} class={`reveal reveal-delay-${index % 3} group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] transition-all duration-500 hover:border-[--color-accent]/30 cursor-pointer`}>
+          
+          <!-- Contenedor de la Imagen con Filtro Azul y Zoom -->
+          <div class="relative aspect-video overflow-hidden border-b border-white/5 bg-gray-900">
+            <!-- Capa de overlay azul (Tu marca) -->
+            <div class="absolute inset-0 z-10 bg-[--color-accent]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            
+            <Image 
+              src={project.image} 
+              alt={project.alt}
+              width={720}
+              height={405}
+              format="webp"
+              class="h-full w-full object-cover object-top transition-transform duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
+            />
+          </div>
+
+          <!-- Contenido de la Tarjeta -->
+          <div class="flex flex-1 flex-col p-6 space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-xl font-bold text-white group-hover:text-[--color-accent] transition-colors duration-300">
+                {project.title}
+              </h3>
+              <p class="text-sm text-gray-400 line-clamp-2 leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 pt-2 mt-auto">
+              {project.tags.map((tag) => (
+                <span class="font-mono text-[10px] text-gray-400 bg-white/5 px-2 py-1 rounded-md border border-white/5 group-hover:border-[--color-accent]/10 group-hover:text-white transition-colors">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Flecha de link sutil -->
+          <div class="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-[--color-accent]">
+            ↗
+          </div>
+        </a>
+      ))}
+    </div>
   </div>
 </section>

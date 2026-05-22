@@ -1,0 +1,213 @@
+---
+// src/pages/proyectos/[slug].astro
+import { Image } from 'astro:assets';
+
+// Importaciones de imágenes para test (reemplaza con tus rutas reales)
+import imgNeivor from '../../assets/proyecto-neivor.png';
+import imgQuick from '../../assets/proyecto-quick.png';
+import imgVivaLeer from '../../assets/proyecto-vivaleer.png';
+import imgAchs from '../../assets/proyecto-achs.png';
+import Layout from '../../layouts/Layout.astro';
+
+// 1. Definimos la función para generar las rutas en modo estático (SSG)
+export async function getStaticPaths() {
+ const projectsData = [
+    {
+      slug: "neivor-platform",
+      title: "Neivor PropTech Platform",
+      client: "Neivor",
+      role: "Frontend / Mobile Developer",
+      period: "2022",
+      description: "Optimización del flujo de pagos y UI components para la gestión de condominios en Latam.",
+      techStack: ["Vue.js", "TypeScript", "Tailwind CSS", "Flutter"],
+      challenge: "Centralizar la recaudación financiera y la administración de múltiples condominios en una experiencia omnicanal (Web y Mobile) ágil, mitigando la fricción en la convivencia y administración de condiminios",
+      solution: "Refactorizamos los flujos críticos de la web app con Vue.js y TypeScript bajo una arquitectura modular de componentes. Sincronizamos la experiencia móvil implementando vistas de alto rendimiento en Flutter para el control de accesos por QR y las notificaciones en tiempo real.",
+      image: imgNeivor,
+      alt: "Dashboard interactivo de Neivor",
+      liveUrl: "https://www.neivor.com/",
+      githubUrl: null // Proyecto privado corporativo
+    },
+    {
+      slug: "quick-logistics",
+      title: "Quick Logistics TMS",
+      client: "Quick Logistics",
+      role: "Frontend Engineer",
+      period: "2019 — 2021",
+      description: "Desarrollo del sistema de ruteo inteligente en tiempo real y tracking de última milla.",
+      techStack: ["React", "JavaScript", "Tailwind v4"],
+      challenge: "Visualizar el ruteo inteligente de miles de transportistas en tiempo real sin degradar el rendimiento del navegador, garantizando una latencia mínima en la actualización de coordenadas.",
+      solution: "Desarrollamos paneles de monitoreo interactivos utilizando React y estados globales optimizados. Implementamos capas asincrónicas sobre mapas de alta densidad y estilizamos con Tailwind v4 para maximizar el Core Web Vitals en dispositivos de operaciones en campo. Integración de pasarelas de pagos para facilitar los pagos a los usuarios del servicio.",
+      image: imgQuick,
+      alt: "Interfaz de monitoreo de Quick Logistics",
+      liveUrl: "https://quick.com.co/",
+      githubUrl: null
+    },
+    {
+      slug: "viva-leer-copec",
+      title: "Viva Leer Copec Digital",
+      client: "Copec / Fundación La Fuente",
+      role: "Frontend Engineer",
+      period: "2023 — 2024",
+      description: "Plataforma educativa y catálogo de cuentos interactivos de alto rendimiento.",
+      techStack: ["Next.js", "WordPress", "Tailwind v4"],
+      challenge: "Transformar un CMS tradicional en una infraestructura headless capaz de servir cuentos interactivos digitales pesados con tiempos de carga mínimos, pensada para escuelas con conectividad limitada.",
+      solution: "Implementamos una arquitectura Jamstack desacoplada usando Next.js como frontend y WordPress como Headless CMS mediante su REST API. Aplicamos Server-Side Rendering (SSR) dinámico para el catálogo de libros, estilizado con el motor ultrarrápido de Tailwind v4.",
+      image: imgVivaLeer,
+      alt: "Plataforma web de Viva Leer Copec",
+      liveUrl: "https://vivaleercopec.cl/",
+      githubUrl: null
+    },
+    {
+      slug: "plataformas-achs",
+      title: "Plataformas ACHS",
+      client: "Asociación Chilena de Seguridad",
+      role: "Frontend Developer Senior",
+      period: "2025 - 2026",
+      description: "Creación de funcionalidades en las diferentes plataformas de la Aseguradora ACHS en Chile.",
+      techStack: ["JavaScript", "Bootstrap", "Sitefinity CMS"],
+      challenge: "Modernizar los portales médicos y empresariales integrando nuevas herramientas de autogestión de manera limpia sobre una infraestructura empresarial rígida basada en el CMS Sitefinity.",
+      solution: "Inyectamos módulos e interfaces dinámicas escritas en JavaScript nativo optimizado, resolviendo la compatibilidad de estilos complejos con Bootstrap. Diseñamos componentes modulares reutilizables que facilitaron los flujos de trámites internos para empresas afiliadas y pacientes.",
+      image: imgAchs,
+      alt: "Interfaz de los portales digitales de la ACHS",
+      liveUrl: "https://www.achs.cl/",
+      githubUrl: null
+    }
+  ];
+
+  return projectsData.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} | Caso de Estudio`}>
+  <article class="max-w-4xl mx-auto px-6 py-32 space-y-16">
+    
+    <!-- Botón de regreso flotante/sutil -->
+    <a href="/" class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-gray-500 hover:text-[--color-accent] transition-colors">
+      <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Volver al Radar
+    </a>
+
+    <!-- Header del Proyecto -->
+    <div class="space-y-6">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-white">
+        {project.title}
+      </h1>
+      
+      <!-- Meta info del proyecto en Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 border-t border-b border-white/5 py-6 font-mono text-xs">
+        <div>
+          <span class="text-gray-500 block uppercase mb-1">Cliente</span>
+          <span class="text-white font-bold">{project.client}</span>
+        </div>
+        <div>
+          <span class="text-gray-500 block uppercase mb-1">Rol</span>
+          <span class="text-white font-bold">{project.role}</span>
+        </div>
+        <div>
+          <span class="text-gray-500 block uppercase mb-1">Periodo</span>
+          <span class="text-white font-bold">{project.period}</span>
+        </div>
+        <div>
+          <span class="text-gray-500 block uppercase mb-1">Stack</span>
+          <div class="flex flex-wrap gap-1 mt-1">
+            {project.techStack.map(tech => (
+              <span class="text-[10px] text-[--color-accent] bg-[--color-accent]/5 px-1.5 py-0.5 rounded border border-[--color-accent]/10">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagen Principal Hero del Caso de Estudio -->
+    <div class="relative aspect-video overflow-hidden rounded-2xl border border-white/5 bg-gray-950 shadow-2xl shadow-[--color-accent]/5">
+      <Image 
+        src={project.image} 
+        alt={project.title}
+        class="w-full h-full object-cover object-top"
+        width={1200}
+        height={675}
+      />
+    </div>
+
+    <!-- Cuerpo del Caso de Estudio (Editorial Layout) -->
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-16 items-start">
+      
+      <!-- Lado Izquierdo: El Reto (Sticky para pantallas grandes) -->
+      <div class="space-y-4 md:sticky md:top-24">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-[--color-accent] flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-[--color-accent]"></span> El Desafío
+        </h2>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          {project.challenge}
+        </p>
+      </div>
+
+      <!-- Lado Derecho: La Solución detallada -->
+      <div class="space-y-6">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-white">La Solución & Arquitectura</h2>
+        <p class="text-gray-300 text-lg leading-relaxed font-light">
+          {project.solution}
+        </p>
+        
+        <!-- Bloque destacado técnico -->
+        <blockquote class="border-l-2 border-[--color-accent] bg-white/[0.01] p-4 rounded-r-xl text-sm text-gray-400 italic">
+          "La integración de componentes desacoplados nos permitió reducir los tiempos de renderizado y asegurar que las consultas críticas al backend respondieran en menos de 100ms."
+        </blockquote>
+      </div>
+    </div>
+
+
+    <hr class="border-white/5 my-12" />
+
+    <!-- SECCIÓN CTA: Cierre del Proyecto -->
+    <div class="reveal rounded-3xl border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden group">
+      
+      <!-- Contenido de texto -->
+      <div class="space-y-2 max-w-md text-center md:text-left z-10">
+        <h3 class="text-2xl font-bold text-white tracking-tight">¿Quieres ver el resultado final?</h3>
+        <p class="text-gray-400 text-sm">
+          Explora la aplicación en producción o analiza la arquitectura de componentes implementada en este proyecto.
+        </p>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto z-10">
+        <!-- Botón Principal: Live Site (Azul Premium) -->
+        {project.liveUrl && (
+          <a 
+            href={project.liveUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
+          >
+            Visitar Sitio Web 
+            <span class="text-xs">↗</span>
+          </a>
+        )}
+
+        <!-- Botón Secundario: Código (Minimalista) -->
+        <!-- {project.githubUrl && (
+          <a 
+            href={project.githubUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-white/10 bg-white/5 text-white font-medium text-sm transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-105 active:scale-95"
+          >
+            Ver Código Fuente
+          </a>
+        )} -->
+      </div>
+
+      <!-- Efecto de fondo sutil que reacciona al spotlight general -->
+      <div 
+        class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        style="background: radial-gradient(180px circle at var(--x) var(--y), rgba(59, 130, 246, 0.08), transparent 80%);"
+      ></div>
+    </div>
+
+  </article>
+</Layout>
