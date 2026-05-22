@@ -1,0 +1,67 @@
+---
+
+const metrics = [
+  {
+    value: "+40%",
+    label: "Optimización Core Web Vitals",
+    description: "Refactorización modular de flujos financieros y vistas críticas de recaudación en la plataforma Neivor.",
+    tech: "Vuejs / TS"
+  },
+  {
+    value: "<100ms",
+    label: "Latencia en Tiempo Real",
+    description: "Procesamiento y renderizado asincrónico de flujos de coordenadas concurrentes para Quick Logistics TMS.",
+    tech: "React / Tail v4"
+  },
+  {
+    value: "Jamstack",
+    label: "Arquitectura Headless CMS",
+    description: "Desacoplamiento total de infraestructura monolítica para la entrega rápida de contenido en Viva Leer Copec.",
+    tech: "Nextjs / Rest API"
+  }
+];
+---
+
+<section class="max-w-6xl mx-auto px-6 py-12 md:py-16">
+  <div class="reveal w-full border border-white/5 rounded-3xl bg-zinc-950/40 backdrop-blur-md p-6 md:p-10 relative overflow-hidden group">
+    
+    <!-- Línea decorativa superior azul de carga técnica -->
+    <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[--color-accent]/30 to-transparent"></div>
+    
+    <!-- Grid de Métricas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-10">
+      {metrics.map((metric, index) => (
+        <div class={`space-y-3 flex flex-col justify-between ${index !== 0 ? 'md:border-l md:border-white/5 md:pl-8 lg:pl-12' : ''}`}>
+          
+          <div class="space-y-2">
+            <!-- Valor Numérico Principal -->
+            <div class="font-mono text-4xl md:text-5xl font-bold tracking-tight text-white group-hover:text-[--color-accent] transition-colors duration-500">
+              {metric.value}
+            </div>
+            
+            <!-- Etiqueta del Logro -->
+            <h4 class="text-xs font-mono uppercase tracking-widest text-gray-400">
+              {metric.label}
+            </h4>
+            
+            <!-- Descripción Contextual Técnica -->
+            <p class="text-xs text-gray-500 leading-relaxed font-sans pt-1">
+              {metric.description}
+            </p>
+          </div>
+
+          <!-- Mini Tag de Contexto de Stack -->
+          <div class="pt-3 mt-auto">
+            <span class="font-mono text-[9px] text-gray-600 bg-white/[0.02] border border-white/5 px-2 py-0.5 rounded">
+              {metric.tech}
+            </span>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+    <!-- Resplandor azul de fondo que se activa al hacer hover en la tarjeta general -->
+    <div class="pointer-events-none absolute -bottom-48 -right-48 h-96 w-96 rounded-full bg-[--color-accent]/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+  </div>
+</section>

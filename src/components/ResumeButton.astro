@@ -1,0 +1,64 @@
+---
+const resumeLink = "/Andres-Castro-Software-Developer-CV.pdf"; 
+---
+
+<div class="fixed top-6 right-6 z-40 font-mono text-xs">
+  <div class="relative group">
+    
+    <!-- 1. El Efecto de Radar / Glow de fondo en AZUL (Pulsa infinitamente) -->
+    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-[--color-accent] to-blue-600 opacity-40 blur-sm animate-pulse group-hover:opacity-100 group-hover:blur-md transition-all duration-500"></div>
+    
+    <!-- 2. Segundo Glow de expansión dinámica al hacer Hover (Puro azul) -->
+    <div class="absolute -inset-px rounded-full bg-[--color-accent]/40 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 scale-125 pointer-events-none"></div>
+
+    <!-- 3. Cuerpo principal del Botón -->
+    <a 
+      href={resumeLink}
+      download="Andres_Castro_CV.pdf"
+      id="resume-download-btn"
+      class="relative inline-flex items-center gap-3 px-5 py-3 rounded-full bg-zinc-950/90 text-white transition-all duration-300 group-hover:bg-zinc-950 border border-white/10 group-hover:border-[--color-accent]/40 group-hover:scale-105 active:scale-95 shadow-2xl shadow-[--color-accent]/20 block"
+    >
+      <!-- Icono de estado activo en azul titilante -->
+      <span class="relative flex h-3 w-3 items-center justify-center">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[--color-accent] opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-[--color-accent]"></span>
+      </span>
+
+      <!-- Texto con transición de desplazamiento vertical -->
+      <div class="relative overflow-hidden block h-4 w-24">
+        <span class="absolute inset-0 transition-transform duration-300 group-hover:-translate-y-5 block font-bold tracking-tight text-gray-200">RESUME.pdf</span>
+        <span class="absolute inset-0 transition-transform duration-300 translate-y-5 group-hover:translate-y-0 block font-bold text-[--color-accent] tracking-wider">DOWNLOAD ↓</span>
+      </div>
+
+      <!-- Icono de flecha minimalista -->
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke-width="2.5" 
+        stroke="currentColor" 
+        class="w-3.5 h-3.5 text-gray-400 group-hover:text-[--color-accent] transition-colors duration-300 group-hover:translate-y-0.5 transform"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M12 12m0 0L7.5 12m4.5 4.5V3" />
+      </svg>
+    </a>
+
+  </div>
+</div>
+
+<script is:inline>
+  function setupResumeTracking() {
+    const btn = document.getElementById('resume-download-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      if (window.va) {
+        window.va.track('download_resume', { name: 'Andres Castro CV' });
+      }
+      console.log('📊 KPI: CV descargado desde el botón de pulso azul.');
+    });
+  }
+
+  setupResumeTracking();
+  document.addEventListener('astro:page-load', setupResumeTracking);
+</script>

@@ -1,10 +1,11 @@
 ---
-// src/layouts/MainLayout.astro
 import { ViewTransitions } from 'astro:transitions';
-import '../styles/global.css'; // Asegúrate de importar tu CSS aquí
+import '../styles/global.css'; 
+import CommandPalette from '../components/CommandPalette.astro';
+import ResumeButton from '../components/ResumeButton.astro';
 interface Props {
   title: string;
-  description?: string; // La hacemos opcional con un valor por defecto
+  description?: string; 
 }
 
 const { 
@@ -44,7 +45,11 @@ const {
     </div>
     
     <main class="relative z-40">
+      <ResumeButton />
+      
       <slot />
+
+      <CommandPalette />
     </main>
 
     <script>
