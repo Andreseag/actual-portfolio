@@ -37,7 +37,7 @@ const integrations = [
       </h2>
       <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-soft-white leading-tight">
         Conectamos tus herramientas. <br />
-        <span class="text-gray-500">Automatizamos tu operación.</span>
+        <span class="text-gray-500">Automatizamos tu operation.</span>
       </h3>
       <p class="text-base text-gray-400 max-w-xl leading-relaxed">
         No creamos sitios web aislados. Desarrollamos infraestructuras digitales integradas que eliminan las tareas repetitivas y hacen crecer tu negocio en piloto automático.
@@ -46,9 +46,11 @@ const integrations = [
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
       {integrations.map((item, index) => (
+        /* FIX: Agregamos overflow-hidden a la tarjeta */
         <div 
-          class={`reveal reveal-delay-${(index % 2) + 1} group relative rounded-3xl border border-border-custom bg-bg-card backdrop-blur-md p-8 flex flex-col justify-between transition-all duration-500 hover:border-accent/30 shadow-xl shadow-black/5`}
+          class={`reveal reveal-delay-${(index % 2) + 1} group relative rounded-3xl border border-border-custom bg-bg-card backdrop-blur-md p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-accent/30 shadow-xl shadow-black/5`}
         >
+          {/* El brillo ahora se corta perfectamente en las esquinas redondeadas de la tarjeta */}
           <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/0 group-hover:bg-accent/5 blur-3xl transition-all duration-500 pointer-events-none"></div>
 
           <div class="space-y-6">
@@ -70,7 +72,7 @@ const integrations = [
 
           <div class="mt-8 pt-6 border-t border-border-custom flex flex-wrap gap-2">
             {item.tech.map((tech) => (
-              <span class="font-mono text-[10px] text-gray-500 dark:text-gray-400 bg-dark-bg border border-border-custom px-2.5 py-1 rounded-md tracking-wide group-hover:border-accent/10 transition-colors">
+              <span class="font-mono text-[10px] text-gray-400 bg-dark-bg border border-border-custom px-2.5 py-1 rounded-md tracking-wide group-hover:border-accent/10 transition-colors">
                 {tech}
               </span>
             ))}
