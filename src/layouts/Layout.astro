@@ -2,7 +2,9 @@
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css'; 
 import CommandPalette from '../components/CommandPalette.astro';
-import ResumeButton from '../components/ResumeButton.astro';
+// import ResumeButton from '../components/ResumeButton.astro';
+// import ThemeToggle from '../components/ThemeToggle.astro';
+import Header from '../components/Header.astro';
 interface Props {
   title: string;
   description?: string; 
@@ -20,6 +22,21 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+
+    <!-- 🛑 SCRIPT ANTI-FLASH: Se ejecuta antes de pintar el HTML -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return 'dark';
+      })();
+      if (theme === 'light') {
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+    </script>
 
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
@@ -43,13 +60,17 @@ const {
       style="background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(59, 130, 246, 0.1), transparent 40%);"
     >
     </div>
-    
+
+    <Header />
+      
     <main class="relative z-40">
-      <ResumeButton />
+      
+      <!-- <ResumeButton /> -->
       
       <slot />
 
       <CommandPalette />
+      <!-- <ThemeToggle /> -->
     </main>
 
     <script>

@@ -1,0 +1,81 @@
+---
+// src/components/TechMarquee.astro
+
+const technologies = [
+  { name: "n8n", type: "Automatización", isAccent: true },
+  { name: "Astro", type: "Frontend Framework", isAccent: false },
+  { name: "Tailwind v4", type: "Diseño e Interfaz", isAccent: false },
+  { name: "React", type: "Componentes UI", isAccent: false },
+  { name: "Docker", type: "Infraestructura", isAccent: false },
+  { name: "Stripe", type: "Pasarela de Pagos", isAccent: false },
+  { name: "Supabase", type: "Base de Datos & Auth", isAccent: false },
+  { name: "Go / Gin", type: "Backend de Alta Carga", isAccent: false },
+];
+---
+
+<section class="w-full py-12 border-t border-b border-border-custom bg-bg-card/20 backdrop-blur-sm overflow-hidden relative">
+  <!-- Efecto de difuminado lateral (Fade) para máxima elegancia editorial -->
+  <div class="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none"></div>
+  <div class="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none"></div>
+
+  <!-- Contenedor del Track en Movimiento -->
+  <div class="flex w-max relative">
+    
+    <!-- Bloque 1 (Original) -->
+    <div class="flex items-center gap-16 px-8 animate-marquee whitespace-nowrap">
+      {technologies.map((tech) => (
+        <div class="flex items-center gap-3 group/item cursor-default select-none">
+          {/* Indicador geométrico minimalista en lugar de logos SVG pesados/rotos */}
+          <div class={`h-2.5 w-2.5 rotate-45 border transition-all duration-300 group-hover/item:rotate-90 ${tech.isAccent ? 'bg-accent border-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]' : 'border-gray-600 bg-transparent group-hover/item:border-soft-white'}`}></div>
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base font-mono font-bold text-gray-400 group-hover/item:text-soft-white transition-colors duration-300 tracking-tight">
+              {tech.name}
+            </span>
+            <span class="text-[9px] font-sans uppercase tracking-widest text-gray-600 group-hover/item:text-accent transition-colors duration-300">
+              {tech.type}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bloque 2 (Espejo exacto para el loop infinito seamless) -->
+    <div class="flex items-center gap-16 px-8 animate-marquee whitespace-nowrap" aria-hidden="true">
+      {technologies.map((tech) => (
+        <div class="flex items-center gap-3 group/item cursor-default select-none">
+          <div class={`h-2.5 w-2.5 rotate-45 border transition-all duration-300 group-hover/item:rotate-90 ${tech.isAccent ? 'bg-accent border-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]' : 'border-gray-600 bg-transparent group-hover/item:border-soft-white'}`}></div>
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base font-mono font-bold text-gray-400 group-hover/item:text-soft-white transition-colors duration-300 tracking-tight">
+              {tech.name}
+            </span>
+            <span class="text-[9px] font-sans uppercase tracking-widest text-gray-600 group-hover/item:text-accent transition-colors duration-300">
+              {tech.type}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Animación nativa de alta eficiencia (ejecutada en la GPU) */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  /* Pausar la marquesina al hacer hover general para facilitar la lectura técnica */
+  .flex:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+</style>

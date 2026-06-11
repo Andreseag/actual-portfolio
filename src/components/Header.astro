@@ -1,0 +1,137 @@
+---
+// src/components/Header.astro
+
+const navItems = [
+  { label: "Servicios", href: "#servicios" },
+  { label: "Proceso", href: "#proceso" },
+  { label: "Calculadora ROI", href: "#roi" },
+  { label: "Casos de Uso", href: "#casos" },
+  { label: "FAQ", href: "#faq" },
+];
+---
+
+<header class="fixed top-0 left-0 w-full z-50 bg-dark-bg/70 backdrop-blur-md border-b border-border-custom transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+    
+    <!-- Logo / Marca -->
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="font-mono text-sm font-bold text-soft-white tracking-tighter group-hover:text-accent transition-colors duration-300">
+        CASTRO<span class="text-accent">.</span>STUDIO
+      </span>
+      <span class="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-gray-500 border border-border-custom px-1.5 py-0.5 rounded bg-bg-card/40">
+        B2B Dev
+      </span>
+    </a>
+
+    <!-- Navegación Desktop -->
+    <nav class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class="text-xs font-mono text-gray-400 hover:text-soft-white tracking-wide transition-colors duration-200 uppercase"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Botón CTA de Conversión -->
+    <div class="hidden md:flex items-center">
+      <a 
+        href="#contacto" 
+        class="font-mono text-xs uppercase tracking-wider text-dark-bg bg-accent hover:bg-accent/90 px-5 py-2.5 rounded-full font-bold shadow-[0_4px_20px_rgba(var(--accent-rgb),0.15)] transition-all duration-300 hover:scale-[1.02]"
+      >
+        Agendar Consultoría
+      </a>
+    </div>
+
+    <!-- Botón Hamburguesa (Móvil) -->
+    <button 
+      id="menu-toggle" 
+      class="flex md:hidden flex-col justify-center items-center w-8 h-8 space-y-1.5 text-gray-400 hover:text-soft-white z-50 focus:outline-none"
+      aria-label="Toggle Menu"
+    >
+      <span class="w-6 h-0.5 bg-current transition-transform duration-300 raw-line-1"></span>
+      <span class="w-6 h-0.5 bg-current transition-opacity duration-300 raw-line-2"></span>
+      <span class="w-6 h-0.5 bg-current transition-transform duration-300 raw-line-3"></span>
+    </button>
+
+  </div>
+
+  <!-- Menú Desplegable Móvil -->
+  <div 
+    id="mobile-menu" 
+    class="fixed inset-0 min-h-screen bg-dark-bg/95 backdrop-blur-lg flex flex-col justify-center items-center transform translate-x-full transition-transform duration-300 md:hidden"
+  >
+    <nav class="flex flex-col items-center gap-8 text-center">
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class="mobile-link text-lg font-mono text-gray-300 hover:text-accent tracking-widest uppercase transition-colors duration-200"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a 
+        href="#contacto" 
+        class="mobile-link mt-4 font-mono text-sm uppercase tracking-wider text-dark-bg bg-accent px-6 py-3 rounded-full font-bold transition-all duration-200"
+      >
+        Agendar Consultoría
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Compensador de espacio para que el Hero no se meta debajo del Header fijo -->
+<div class="h-20 w-full"></div>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  
+  // Elementos internos del botón para la animación a "X"
+  const line1 = document.querySelector('.raw-line-1');
+  const line2 = document.querySelector('.raw-line-2');
+  const line3 = document.querySelector('.raw-line-3');
+
+  function toggleMenu() {
+    mobileMenu?.classList.toggle('translate-x-full');
+    line1?.classList.toggle('rotate-45');
+    line1?.classList.toggle('translate-y-2');
+    line2?.classList.toggle('opacity-0');
+    line3?.classList.toggle('-rotate-45');
+    line3?.classList.toggle('-translate-y-2');
+    document.body.classList.toggle('overflow-hidden'); // Evita scroll de fondo con menú abierto
+  }
+
+  menuToggle?.addEventListener('click', toggleMenu);
+
+  // Cerrar el menú automáticamente cuando se le da click a un enlace de sección
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (!mobileMenu?.classList.contains('translate-x-full')) {
+        toggleMenu();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Clases auxiliares para la animación limpia del botón hamburguesa */
+  .rotate-45 {
+    transform: rotate(45deg);
+  }
+  .-rotate-45 {
+    transform: rotate(-45deg);
+  }
+  .translate-y-2 {
+    transform: translateY(8px);
+  }
+  .-translate-y-2 {
+    transform: translateY(-8px);
+  }
+  .opacity-0 {
+    opacity: 0;
+  }
+</style>

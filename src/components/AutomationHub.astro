@@ -1,0 +1,84 @@
+---
+// src/components/AutomationHub.astro
+const integrations = [
+  {
+    title: "Orquestación de Flujos con n8n",
+    description: "Diseño e implementación de flujos de trabajo automatizados y visuales usando n8n (Self-Hosted). Conectamos todas tus aplicaciones empresariales sin pagar los costos prohibitivos de Zapier o Make, manteniendo el control y privacidad total de tus datos.",
+    tech: ["n8n", "Docker", "Self-Hosted", "Webhooks"],
+    icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+  },
+  {
+    title: "Sincronización de CRMs & Leads",
+    description: "Conexión automatizada de tus formularios web y landings de captura con herramientas de venta como HubSpot, Salesforce o Pipedrive. Enrutamiento inteligente y enriquecimiento de prospectos en tiempo real.",
+    tech: ["HubSpot API", "REST APIs", "OAuth2"],
+    icon: "M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+  },
+  {
+    title: "Motores de Pago & Facturación",
+    description: "Automatización completa de pasarelas de pago (Stripe, PayU), pasarelas locales, motores de liquidación de saldos y generación automática de facturas legales en PDF enviadas directo al cliente tras la compra.",
+    tech: ["Stripe API", "Supabase Webhooks", "PDF Engines"],
+    icon: "M12 6v12m-3-2.818.879.559M12.5 16.5c1.493 0 2.7-1.21 2.7-2.7 0-1.494-1.207-2.7-2.7-2.7h-1.5c-1.493 0-2.7-1.21-2.7-2.7 0-1.494 1.207-2.7 2.7-2.7h1.5c1.493 0 2.7 1.21 2.7 2.7M12 3v3m0 12v3"
+  },
+  {
+    title: "Notificaciones & Alertas de Negocio",
+    description: "Alertas instantáneas personalizadas activadas por eventos clave del negocio. Envío automático de confirmaciones por WhatsApp Business, correos transaccionales premium o reportes operativos cifrados a Slack o Teams.",
+    tech: ["WhatsApp API", "Twilio", "Resend", "Slack Webhooks"],
+    icon: "M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+  }
+];
+---
+
+<section id="servicios" class="w-full max-w-6xl mx-auto px-6 md:px-12 py-24 border-t border-border-custom">
+  <div class="space-y-16 w-full">
+    
+    <div class="reveal max-w-3xl space-y-4">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-accent animate-pulse"></span> Ecosistema Core
+      </h2>
+      <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-soft-white leading-tight">
+        Conectamos tus herramientas. <br />
+        <span class="text-gray-500">Automatizamos tu operación.</span>
+      </h3>
+      <p class="text-base text-gray-400 max-w-xl leading-relaxed">
+        No creamos sitios web aislados. Desarrollamos infraestructuras digitales integradas que eliminan las tareas repetitivas y hacen crecer tu negocio en piloto automático.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      {integrations.map((item, index) => (
+        <div 
+          class={`reveal reveal-delay-${(index % 2) + 1} group relative rounded-3xl border border-border-custom bg-bg-card backdrop-blur-md p-8 flex flex-col justify-between transition-all duration-500 hover:border-accent/30 shadow-xl shadow-black/5`}
+        >
+          <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/0 group-hover:bg-accent/5 blur-3xl transition-all duration-500 pointer-events-none"></div>
+
+          <div class="space-y-6">
+            <div class="h-12 w-12 rounded-2xl border border-border-custom bg-dark-bg/50 flex items-center justify-center text-accent group-hover:scale-110 group-hover:border-accent/20 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
+              </svg>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="text-xl font-bold text-soft-white group-hover:text-accent transition-colors duration-300 tracking-tight">
+                {item.title}
+              </h4>
+              <p class="text-sm text-gray-400 leading-relaxed font-sans">
+                {item.description}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-border-custom flex flex-wrap gap-2">
+            {item.tech.map((tech) => (
+              <span class="font-mono text-[10px] text-gray-500 dark:text-gray-400 bg-dark-bg border border-border-custom px-2.5 py-1 rounded-md tracking-wide group-hover:border-accent/10 transition-colors">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

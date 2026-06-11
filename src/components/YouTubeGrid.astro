@@ -1,0 +1,120 @@
+---
+// src/components/YouTubeGrid.astro
+
+// Configura aquí tus videos. Guarda las imágenes en /public/img/youtube/ o usa URLs directas.
+const videos = [
+  {
+    title: "Cómo optimicé la arquitectura frontend para soportar tráfico masivo",
+    duration: "14:20",
+    views: "+2.5K",
+    category: "Ingeniería",
+    thumbnail: "/img/youtube/thubnail.jpg", // Ruta a tu imagen en la carpeta /public
+    link: "https://youtube.com/@tu-canal"
+  },
+  {
+    title: "Creando un sistema de ruteo logístico en tiempo real con React y Go",
+    duration: "22:05",
+    views: "+4.1K",
+    category: "Fullstack",
+    thumbnail: "/img/youtube/thubnail.jpg",
+    link: "https://youtube.com/@tu-canal"
+  },
+  {
+    title: "La verdad sobre Tailwind v4 y Astro: ¿Vale la pena la migración?",
+    duration: "11:15",
+    views: "+1.8K",
+    category: "Review Técnico",
+    thumbnail: "/img/youtube/thubnail.jpg",
+    link: "https://youtube.com/@tu-canal"
+  }
+];
+---
+
+<section id="contenido" class="max-w-6xl mx-auto px-6 py-24 border-t border-white/5">
+  <div class="reveal space-y-12 w-full">
+    
+    <!-- Encabezado de la Sección -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="space-y-2">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-[--color-accent] flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-[--color-accent] animate-pulse"></span> Content Creation
+        </h2>
+        <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-white">
+          Compartiendo <span class="text-gray-500">Código & Experiencia</span>
+        </h3>
+        <p class="text-gray-400 text-sm max-w-xl leading-relaxed">
+          Documento mis procesos, experimentos técnicos y soluciones de arquitectura en YouTube para ayudar a otros desarrolladores a subir de nivel.
+        </p>
+      </div>
+
+      <!-- Botón de Suscribirse -->
+      <a 
+        href="https://youtube.com/@tu-canal" 
+        target="_blank" 
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600/10 hover:bg-red-600 border border-red-600/20 text-red-500 hover:text-white font-mono text-xs font-bold transition-all duration-300 hover:scale-105"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        SUBSCRIBE_CHANNEL
+      </a>
+    </div>
+
+    <!-- Grid de Videos con Imagen -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {videos.map((video) => (
+        <a 
+          href={video.link} 
+          target="_blank"
+          class="group relative flex flex-col justify-between rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md p-3 overflow-hidden hover:border-[--color-accent]/30 transition-all duration-500 hover:-translate-y-1 shadow-xl shadow-black/50"
+        >
+          <!-- Contenedor de la Imagen (Thumbnail) -->
+          <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-zinc-900 border border-white/5">
+            <img 
+              src={video.thumbnail} 
+              alt={video.title}
+              loading="lazy"
+              class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+            />
+            
+            <!-- Badge de Duración superpuesto en la imagen -->
+            <span class="absolute bottom-2 right-2 font-mono text-[10px] bg-black/80 px-1.5 py-0.5 rounded text-gray-300 border border-white/5">
+              {video.duration}
+            </span>
+
+            <!-- Botón flotante de Play que aparece al hacer hover sobre la imagen -->
+            <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="h-12 w-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center shadow-lg shadow-[--color-accent]/50 transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 translate-x-[1.5px]">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del Video (Debajo de la Imagen) -->
+          <div class="p-3 space-y-3 flex-grow flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="pt-1">
+                <span class="font-mono text-[9px] text-[--color-accent] bg-[--color-accent]/5 border border-[--color-accent]/10 px-2 py-0.5 rounded">
+                  {video.category}
+                </span>
+              </div>
+              <h4 class="text-sm font-bold text-gray-300 group-hover:text-white leading-snug tracking-tight transition-colors line-clamp-2">
+                {video.title}
+              </h4>
+            </div>
+
+            <!-- Métrica inferior de vistas -->
+            {/* <div class="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[11px] font-mono text-gray-500">
+              <span class="h-1.5 w-1.5 rounded-full bg-gray-600 group-hover:bg-[--color-accent] transition-colors"></span>
+              <span>{video.views} vistas</span>
+            </div> */}
+          </div>
+
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,111 @@
+---
+// src/components/AdvancedUseCases.astro
+
+const cases = [
+  {
+    title: "Automatización de Ventas & Prospección por WhatsApp",
+    badge: "Marketing & Ventas",
+    problem: "Los leads que llegan por pauta en Meta (Facebook/Instagram) tardan horas en ser atendidos por los asesores, enfriando la venta y perdiendo presupuesto.",
+    solution: "Orquestamos un flujo en n8n que captura el lead en tiempo real, filtra los datos automáticamente, lo asigna al asesor disponible en el CRM (HubSpot/Pipedrive) y dispara una notificación instantánea y personalizada por WhatsApp.",
+    impact: "-92% en tiempo de primera respuesta",
+    stack: ["n8n", "Meta Webhooks", "WhatsApp API", "CRM"],
+    gridClass: "md:col-span-2"
+  },
+  {
+    title: "Conciliación de Pagos & Facturación Electrónica",
+    badge: "Finanzas & Legal",
+    problem: "El equipo administrativo gasta días enteros revisando extractos de pasarelas (Stripe, PayU, Wompi) y creando facturas manualmente para la DIAN.",
+    solution: "Conectamos los webhooks de tu pasarela de pagos a un motor en n8n. Cada vez que un cliente paga, el sistema valida los datos de la transacción, genera el documento y lo envía directo al proveedor tecnológico de facturación electrónica sin intervención humana.",
+    impact: "Cero errores manuales en contabilidad",
+    stack: ["n8n", "Pasarelas API", "XML/DIAN", "PostgreSQL"],
+    gridClass: "md:col-span-1"
+  },
+  {
+    title: "Sincronización de Inventarios & Legacy Software",
+    badge: "Operaciones & Logística",
+    problem: "El inventario de la tienda física (software antiguo o Excel en red) no se habla con la tienda online, generando sobreventas y quiebres de stock.",
+    solution: "Desarrollamos un conector a medida utilizando Go (Gin) que extrae los movimientos de tu base de datos local y, mediante tareas programadas (Cron jobs) en n8n, actualiza de forma masiva y segura el stock en Shopify, WooCommerce o tu frontend en Astro.",
+    impact: "Sincronización en tiempo real (< 2 min)",
+    stack: ["Go (Gin)", "n8n", "Docker", "Shopify API"],
+    gridClass: "md:col-span-1"
+  },
+  {
+    title: "Bots de Inteligencia Artificial para Soporte Interno",
+    badge: "Atención al Cliente / HR",
+    problem: "El equipo de soporte o recursos humanos pierde valioso tiempo respondiendo una y otra vez las mismas preguntas frecuentes de clientes o empleados.",
+    solution: "Implementamos un agente inteligente integrado en Slack, Teams o WhatsApp. Usando n8n y modelos de lenguaje (LLMs), el bot consulta la base de conocimientos interna cifrada de la empresa para responder con precisión quirúrgica en segundos, escalando a un humano solo si es necesario.",
+    impact: "70% de consultas repetitivas filtradas",
+    stack: ["n8n", "OpenAI API", "Vector DB", "Slack / WhatsApp"],
+    gridClass: "md:col-span-2"
+  }
+];
+---
+
+<section id="casos" class="w-full max-w-6xl mx-auto px-6 md:px-12 py-24 border-t border-border-custom">
+  <div class="space-y-16 w-full">
+
+    <!-- Encabezado Editorial -->
+    <div class="reveal max-w-3xl space-y-4">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-accent animate-pulse"></span> Soluciones en Producción
+      </h2>
+      <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-soft-white leading-tight">
+        Casos de uso: <br />
+        <span class="text-gray-500">Problemas complejos, arquitecturas resueltas.</span>
+      </h3>
+      <p class="text-base text-gray-400 max-w-xl leading-relaxed">
+        Así es como aplicamos ingeniería de software y automatización low-code avanzada para eliminar la fricción operativa en empresas reales.
+      </p>
+    </div>
+
+    <!-- Bento Grid Asimétrico -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      {cases.map((item, index) => (
+        <div 
+          class={`reveal reveal-delay-${(index % 3) + 1} group flex flex-col justify-between p-8 rounded-3xl border border-border-custom bg-bg-card/40 backdrop-blur-md transition-all duration-300 hover:border-accent/20 ${item.gridClass}`}
+        >
+          <div class="space-y-6">
+            <!-- Encabezado de la Tarjeta (Badge + Impacto) -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-border-custom/50 pb-4">
+              <span class="font-mono text-[9px] uppercase tracking-wider text-accent bg-accent/5 border border-accent/10 px-2 py-0.5 rounded">
+                {item.badge}
+              </span>
+              <span class="font-mono text-xs font-bold text-emerald-400">
+                {item.impact}
+              </span>
+            </div>
+
+            <!-- Cuerpo del Caso -->
+            <div class="space-y-4">
+              <h4 class="text-xl font-bold text-soft-white group-hover:text-accent transition-colors duration-300 tracking-tight font-sans leading-snug">
+                {item.title}
+              </h4>
+              
+              <!-- Estructura Problema vs Solución -->
+              <div class="space-y-3 pt-2 text-xs md:text-sm">
+                <p class="text-gray-400 leading-relaxed font-sans">
+                  <strong class="text-gray-500 block uppercase font-mono text-[10px] tracking-wider mb-0.5">El Dolor:</strong>
+                  {item.problem}
+                </p>
+                <p class="text-gray-300 leading-relaxed font-sans">
+                  <strong class="text-accent block uppercase font-mono text-[10px] tracking-wider mb-0.5">La Automatización:</strong>
+                  {item.solution}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer de la Tarjeta (Tech Stack Utilizado) -->
+          <div class="mt-8 flex flex-wrap gap-2 items-center">
+            {item.stack.map((tech) => (
+              <span class="text-[10px] font-mono text-gray-500 bg-dark-bg/60 border border-border-custom px-2.5 py-1 rounded-md">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

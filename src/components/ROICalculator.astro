@@ -1,0 +1,188 @@
+---
+// src/components/ROICalculator.astro
+---
+
+<section id="roi" class="w-full max-w-5xl mx-auto px-6 md:px-12 py-24 border-t border-border-custom">
+  <div class="space-y-16 w-full">
+    
+    <!-- Encabezado Estratégico -->
+    <div class="reveal max-w-3xl space-y-4 mx-auto text-center">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent flex items-center justify-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-accent animate-pulse"></span> Impacto Financiero
+      </h2>
+      <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-soft-white leading-tight">
+        Calcula la fuga de capital <br />
+        <span class="text-gray-500">en tu operación manual.</span>
+      </h3>
+      <p class="text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+        Las tareas repetitivas drenan la productividad de tu equipo. Descubre cuánto dinero y tiempo puedes recuperar mensualmente automatizando con n8n y código a medida.
+      </p>
+    </div>
+
+    <!-- Contenedor Principal de la Calculadora -->
+    <div class="reveal grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Bloque Izquierdo: Controles / Sliders -->
+      <div class="lg:col-span-5 p-8 rounded-3xl border border-border-custom bg-bg-card/50 backdrop-blur-md space-y-8">
+        <h4 class="text-lg font-bold text-soft-white tracking-tight border-b border-border-custom pb-4 font-sans">
+          Datos de tu Operación
+        </h4>
+
+        <!-- Control 1: Empleados -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center text-sm">
+            <label for="employees" class="text-gray-400 font-medium">Personal operativo:</label>
+            <span class="font-mono text-accent font-bold" id="employees-val">4 empleados</span>
+          </div>
+          <input 
+            type="range" id="employees" min="1" max="30" value="4" 
+            class="w-full h-1.5 bg-dark-bg border border-border-custom rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+          <p class="text-[11px] text-gray-500 font-sans">Número de personas ejecutando el mismo proceso manual.</p>
+        </div>
+
+        <!-- Control 2: Horas Desperdiciadas -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center text-sm">
+            <label for="hours" class="text-gray-400 font-medium">Horas perdidas a la semana:</label>
+            <span class="font-mono text-accent font-bold" id="hours-val">12 horas</span>
+          </div>
+          <input 
+            type="range" id="hours" min="2" max="40" value="12" 
+            class="w-full h-1.5 bg-dark-bg border border-border-custom rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+          <p class="text-[11px] text-gray-500 font-sans">Tiempo estimado por empleado en digitar, copiar datos o enviar correos por semana.</p>
+        </div>
+
+        <!-- Control 3: Costo Hora Colombia -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center text-sm">
+            <label for="cost" class="text-gray-400 font-medium">Costo por hora laboral (COP):</label>
+            <span class="font-mono text-accent font-bold" id="cost-val">$20.000</span>
+          </div>
+          <input 
+            type="range" id="cost" min="8000" max="80000" step="1000" value="20000" 
+            class="w-full h-1.5 bg-dark-bg border border-border-custom rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+          <p class="text-[11px] text-gray-500 font-sans">Pista: Incluye el sueldo base + la carga prestacional básica (~45%).</p>
+        </div>
+      </div>
+
+      <!-- Bloque Derecho: Tarjetas de Resultados Financieros -->
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
+        
+        <!-- Tarjeta 1: Horas Recuperadas -->
+        <div class="p-6 rounded-2xl border border-border-custom bg-bg-card flex flex-col justify-between group transition-all duration-300 hover:border-accent/10">
+          <div class="space-y-2">
+            <span class="block font-mono text-[10px] uppercase tracking-widest text-gray-500">Tiempo Devuelto</span>
+            <h5 class="text-base font-bold text-soft-white tracking-tight">Capacidad Operativa</h5>
+          </div>
+          <div class="mt-6">
+            <span class="text-4xl md:text-5xl font-extrabold tracking-tighter text-soft-white font-mono" id="res-hours">
+              166
+            </span>
+            <span class="text-xs text-gray-500 font-sans block mt-1">Horas recuperadas al mes para tareas de valor.</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2: Fuga Mensual -->
+        <div class="p-6 rounded-2xl border border-border-custom bg-bg-card flex flex-col justify-between group transition-all duration-300 hover:border-accent/10">
+          <div class="space-y-2">
+            <span class="block font-mono text-[10px] uppercase tracking-widest text-red-500/70">Pérdida Actual</span>
+            <h5 class="text-base font-bold text-soft-white tracking-tight">Costo Hundido Mensual</h5>
+          </div>
+          <div class="mt-6">
+            <span class="text-2xl md:text-3xl font-bold tracking-tight text-red-400 font-mono" id="res-loss">
+              $4.156.800
+            </span>
+            <span class="text-xs text-gray-500 font-sans block mt-1">Dinero quemado actualmente en flujos manuales.</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3: Ahorro Mensual con Automatización (Destacada) -->
+        <div class="sm:col-span-2 p-8 rounded-2xl border border-accent/20 bg-accent/[0.02] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 relative overflow-hidden group">
+          <div class="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-accent/5 blur-2xl group-hover:bg-accent/10 transition-all duration-500"></div>
+          
+          <div class="space-y-2 max-w-md">
+            <span class="inline-block font-mono text-[9px] uppercase tracking-wider text-accent bg-accent/5 border border-accent/10 px-2 py-0.5 rounded">
+              Retorno con Castro Studio
+            </span>
+            <h5 class="text-lg font-bold text-soft-white tracking-tight">Ahorro Mensual Estimado</h5>
+            <p class="text-xs text-gray-400 leading-relaxed font-sans">
+              Asumiendo una optimización del 85% de los procesos mediante workflows en n8n e integraciones cloud.
+            </p>
+          </div>
+          <div class="shrink-0">
+            <span class="text-3xl md:text-4xl font-extrabold tracking-tight text-accent font-mono block" id="res-savings">
+              $3.533.280
+            </span>
+            <span class="text-[10px] font-mono text-gray-500 block text-left sm:text-right uppercase tracking-wider mt-1" id="res-annual">
+              Anual: ~$42.399.360 COP
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Lógica matemática adaptada al flujo de nómina/tiempo en Colombia
+  const employeesInput = document.getElementById('employees') as HTMLInputElement;
+  const hoursInput = document.getElementById('hours') as HTMLInputElement;
+  const costInput = document.getElementById('cost') as HTMLInputElement;
+
+  const employeesVal = document.getElementById('employees-val');
+  const hoursVal = document.getElementById('hours-val');
+  const costVal = document.getElementById('cost-val');
+
+  const resHours = document.getElementById('res-hours');
+  const resLoss = document.getElementById('res-loss');
+  const resSavings = document.getElementById('res-savings');
+  const resAnnual = document.getElementById('res-annual');
+
+  // Formateador de moneda es-CO nativo sin decimales fútiles
+  const formatter = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0
+  });
+
+  function calculateROI() {
+    const E = parseInt(employeesInput.value);
+    const H = parseInt(hoursInput.value);
+    const C = parseInt(costInput.value);
+
+    // Actualizar etiquetas visuales de los controles
+    if (employeesVal) employeesVal.textContent = `${E} ${E === 1 ? 'empleado' : 'empleados'}`;
+    if (hoursVal) hoursVal.textContent = `${H} horas`;
+    if (costVal) costVal.textContent = formatter.format(C);
+
+    // Semanas promedio al mes comerciales: 4.33
+    const totalHorasMes = H * E * 4.3333;
+    const costoPerdidoMes = totalHorasMes * C;
+    
+    // Tasa promedio de eficiencia de automatización con n8n: 85%
+    const eficiencia = 0.85;
+    const horasRecuperadas = totalHorasMes * eficiencia;
+    const ahorroMensual = costoPerdidoMes * eficiencia;
+    const ahorroAnual = ahorroMensual * 12;
+
+    // Inyectar resultados calculados en caliente en el DOM
+    if (resHours) resHours.textContent = Math.round(horasRecuperadas).toString();
+    if (resLoss) resLoss.textContent = formatter.format(costoPerdidoMes);
+    if (resSavings) resSavings.textContent = formatter.format(ahorroMensual);
+    if (resAnnual) resAnnual.textContent = `Anual: ~${formatter.format(ahorroAnual)} COP`;
+  }
+
+  // Escuchar eventos de interacción en tiempo real
+  employeesInput?.addEventListener('input', calculateROI);
+  hoursInput?.addEventListener('input', calculateROI);
+  costInput?.addEventListener('input', calculateROI);
+
+  // Inicializar cálculo en la primera carga
+  calculateROI();
+</script>

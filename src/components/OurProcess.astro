@@ -1,0 +1,92 @@
+---
+// src/components/OurProcess.astro
+
+const phases = [
+  {
+    step: "01",
+    title: "Auditoría & Descubrimiento",
+    tag: "Fase de Diagnóstico",
+    description: "Analizamos a fondo tu flujo operativo actual. Mapeamos las tareas repetitivas, identificamos los cuellos de botella y definimos qué APIs o sistemas necesitan conectarse.",
+    deliverable: "Roadmap técnico preliminar"
+  },
+  {
+    step: "02",
+    title: "Arquitectura & Diseño",
+    tag: "Fase de Ingeniería",
+    description: "Modelamos la estructura de la base de datos, los flujos de automatización y la interfaz de usuario en Astro/React. Planificamos la seguridad y la escalabilidad antes de tirar una sola línea de código.",
+    deliverable: "Diagrama de arquitectura & UI Wireframes"
+  },
+  {
+    step: "03",
+    title: "Desarrollo & Integración",
+    tag: "Fase de Código",
+    description: "Construimos el frontend premium y los motores de automatización en el backend. Conectamos webhooks, pipelines de datos y APIs bajo entornos de producción ultra seguros.",
+    deliverable: "Código limpio en repositorio privado"
+  },
+  {
+    step: "04",
+    title: "Despliegue & Monitoreo",
+    tag: "Fase de Producción",
+    description: "Lanzamos la plataforma a producción optimizada al 100% en Core Web Vitals. Configuramos sistemas de logs automáticos para asegurar que tus flujos corran solos en la nube sin fallas.",
+    deliverable: "Acceso al sistema & Logs de estado"
+  }
+];
+---
+
+<section id="proceso" class="w-full max-w-6xl mx-auto px-6 md:px-12 py-24 border-t border-border-custom">
+  <div class="space-y-16 w-full">
+
+    <div class="reveal max-w-3xl space-y-4">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-accent animate-pulse"></span> Metodología Castro Studio
+      </h2>
+      <h3 class="text-3xl md:text-5xl font-bold tracking-tighter text-soft-white leading-tight">
+        El método: <br />
+        <span class="text-gray-500">De procesos manuales a código automatizado.</span>
+      </h3>
+      <p class="text-base text-gray-400 max-w-xl leading-relaxed">
+        Garantizamos predictibilidad y claridad técnica en cada etapa del proyecto. Así es como transformamos tus requerimientos en software listo para producción.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative w-full">
+      
+      {phases.map((phase, index) => (
+        <div 
+          class={`reveal reveal-delay-${index + 1} group flex flex-col justify-between relative p-6 rounded-2xl border border-border-custom bg-bg-card backdrop-blur-md transition-all duration-300 hover:border-accent/20`}
+        >
+          <div class="space-y-6">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-4xl font-extrabold font-mono text-gray-700/30 group-hover:text-accent/30 transition-colors duration-300">
+                {phase.step}
+              </span>
+              <span class="font-mono text-[9px] uppercase tracking-wider text-accent bg-accent/5 border border-accent/10 px-2 py-0.5 rounded">
+                {phase.tag}
+              </span>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-lg font-bold text-soft-white group-hover:text-accent transition-colors duration-300 tracking-tight">
+                {phase.title}
+              </h4>
+              <p class="text-xs md:text-sm text-gray-400 leading-relaxed font-sans">
+                {phase.description}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-border-custom space-y-1">
+            <span class="block font-mono text-[9px] uppercase tracking-widest text-gray-500">
+              ENTREGABLE CLAVE:
+            </span>
+            <span class="block text-xs text-soft-white font-medium group-hover:translate-x-1 transition-transform duration-300">
+              {phase.deliverable}
+            </span>
+          </div>
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>

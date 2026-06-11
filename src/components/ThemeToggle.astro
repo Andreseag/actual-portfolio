@@ -1,0 +1,74 @@
+---
+// src/components/ThemeToggle.astro
+---
+
+<button
+  id="theme-toggle"
+  aria-label="Toggle Theme"
+  class="fixed top-6 right-44 z-40 p-2.5 rounded-full border border-border-custom bg-bg-card backdrop-blur-md text-soft-white/70 transition-all duration-300 hover:border-accent hover:text-soft-white hover:scale-105 active:scale-95 shadow-lg shadow-black/10 cursor-pointer"
+>
+  <!-- Icono Sol (Aparece en Dark) -->
+  <svg id="theme-toggle-sun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21M4.22 4.22l1.58 1.58m12.42 12.42l1.58 1.58M3 12h2.25m13.5 0H21M4.22 19.78l1.58-1.58M17.42 5.78l1.58-1.58M12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9z" />
+  </svg>
+  <!-- Icono Luna (Aparece en Light) -->
+  <svg id="theme-toggle-moon" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12.83A9.54 9.54 0 0112 21.75c-5.26 0-9.5-4.24-9.5-9.5S6.74 2.75 12 2.75c.69 0 1.36.08 2 .21a8.97 8.97 0 00-3 1.86 8.97 8.97 0 00-1.86 3 8.97 8.97 0 001.86 3 8.97 8.97 0 003 1.86z" />
+  </svg>
+</button>
+
+<script is:inline>
+  function getPreferredTheme() {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    return 'dark'; // Fieles al concepto original de Castro Studio
+  }
+
+  function updateToggleToggle(theme) {
+    const sunIcon = document.getElementById('theme-toggle-sun');
+    const moonIcon = document.getElementById('theme-toggle-moon');
+    if (!sunIcon || !moonIcon) return;
+
+    if (theme === 'light') {
+      sunIcon.classList.add('hidden');
+      moonIcon.classList.remove('hidden');
+    } else {
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
+    }
+  }
+
+  function initThemeControl() {
+    const theme = getPreferredTheme();
+    const html = document.documentElement;
+    
+    if (theme === 'light') {
+      html.classList.add('light');
+    } else {
+      html.classList.remove('light');
+    }
+    
+    updateToggleToggle(theme);
+
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isLight = html.classList.contains('light');
+        const nextTheme = isLight ? 'dark' : 'light';
+        
+        if (nextTheme === 'light') {
+          html.classList.add('light');
+        } else {
+          html.classList.remove('light');
+        }
+        
+        localStorage.setItem('theme', nextTheme);
+        updateToggleToggle(nextTheme);
+      });
+    }
+  }
+
+  initThemeControl();
+  document.addEventListener('astro:page-load', initThemeControl);
+</script>
