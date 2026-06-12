@@ -2,19 +2,31 @@
 // src/components/TechMarquee.astro
 
 const technologies = [
-  { name: "n8n", type: "Automatización", isAccent: true },
-  { name: "Astro", type: "Frontend Framework", isAccent: false },
-  { name: "Tailwind v4", type: "Diseño e Interfaz", isAccent: false },
-  { name: "React", type: "Componentes UI", isAccent: false },
-  { name: "Docker", type: "Infraestructura", isAccent: false },
-  { name: "Stripe", type: "Pasarela de Pagos", isAccent: false },
-  { name: "Supabase", type: "Base de Datos & Auth", isAccent: false },
-  { name: "Go / Gin", type: "Backend de Alta Carga", isAccent: false },
+  { id: "n8n", name: "n8n", type: "Automatización", isAccent: true },
+  { id: "astro", name: "Astro", type: "Frontend Framework", isAccent: false },
+  { id: "tailwind", name: "Tailwind v4", type: "Diseño e Interfaz", isAccent: false },
+  { id: "react", name: "React", type: "Componentes UI", isAccent: false },
+  { id: "docker", name: "Docker", type: "Infraestructura", isAccent: false },
+  { id: "stripe", name: "Stripe", type: "Pasarela de Pagos", isAccent: false },
+  { id: "supabase", name: "Supabase", type: "Base de Datos & Auth", isAccent: false },
+  { id: "go", name: "Go / Gin", type: "Backend de Alta Carga", isAccent: false },
 ];
+
+// Diccionario de Vectores Seguros (24x24) que heredan las clases de Tailwind de forma nativa
+const icons = {
+  n8n: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><line x1="7.5" y1="7.5" x2="10" y2="10"/><line x1="14" y1="14" x2="16.5" y2="16.5"/></svg>`,
+  astro: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 22h18L12 2z"/><path d="M12 18l-3-5h6l-3 5z"/></svg>`,
+  tailwind: `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.4 1.4 2.7 2.8 5.7 2.8 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.4-1.4-2.7-2.8-5.7-2.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.6 1.4 1.4 2.7 2.8 5.7 2.8 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.6-1.4-1.4-2.7-2.8-5.7-2.8z"/></svg>`,
+  react: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(30 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(90 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(150 12 12)"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>`,
+  docker: `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M13.98 11.08h2.12c.1 0 .18-.08.18-.18V8.77a.18.18 0 0 0-.18-.18h-2.12a.18.18 0 0 0-.18.18v2.12c0 .1.08.18.18.18zm-2.95 0h2.12c.1 0 .18-.08.18-.18V8.77a.18.18 0 0 0-.18-.18h-2.12a.18.18 0 0 0-.18.18v2.12c0 .1.08.18.18.18zm-2.94 0h2.12c.1 0 .18-.08.18-.18V8.77a.18.18 0 0 0-.18-.18H8.09a.18.18 0 0 0-.18.18v2.12c0 .1.08.18.18.18zm-2.93 0h2.12c.1 0 .18-.08.18-.18V8.77a.18.18 0 0 0-.18-.18h-2.12a.18.18 0 0 0-.18.18v2.12c0 .1.08.18.18.18zM2.2 11.08h2.12c.1 0 .18-.08.18-.18V8.77a.18.18 0 0 0-.18-.18H2.2a.18.18 0 0 0-.18.18v2.12c0 .1.08.18.18.18zm2.96-2.94h2.12c.1 0 .18-.08.18-.18V5.84c0-.1-.08-.18-.18-.18H5.16c-.1 0-.18.08-.18.18v2.12c0 .1.08.18.18.18zm2.94 0h2.12c.1 0 .18-.08.18-.18V5.84c0-.1-.08-.18-.18-.18H8.09c-.1 0-.18.08-.18.18v2.12c0 .1.08.18.18.18zm2.93 0h2.12c.1 0 .18-.08.18-.18V5.84c0-.1-.08-.18-.18-.18h-2.12c-.1 0-.18.08-.18.18v2.12c0 .1.08.18.18.18zm-5.87-2.93h2.12c.1 0 .18-.08.18-.18V2.9c0-.1-.08-.18-.18-.18H8.09c-.1 0-.18.08-.18.18v2.12c0 .1.08.18.18.18zm15.9 3.66c-.16-.52-.64-.86-1.18-.84a4.7 4.7 0 0 0-3.33 1.5c-.14.15-.3.33-.42.52h-.03V6.36c0-.1-.08-.18-.19-.18h-2.12c-.1 0-.18.08-.18.18v4.53h-2.94v2.22c0 .25-.03.49-.1.72l-.02.1c-.13.5-.39.95-.74 1.31l-.1.1c-.23.2-.47.38-.74.52l-.14.07a4.43 4.43 0 0 1-2.66.21l-.09-.02a3.26 3.26 0 0 1-1.52-.87l-.1-.09a3.25 3.25 0 0 1-.73-1.16l-.03-.08a3.2 3.2 0 0 1-.14-.91v-.03H.02v.1c.01.36.04.71.09 1.06l.02.14a5.24 5.24 0 0 0 2 3.54l.13.1c1.2.9 2.66 1.4 4.17 1.4.67 0 1.34-.1 2-.3l.12-.04c1.15-.37 2.18-.1 3.03.78l.1.12c.8.9 1.96 1.42 3.18 1.42 1.77 0 3.39-.1 4.9-2.5l.12-.18a24.1 24.1 0 0 0 3.82-9.22l.04-.17c.13-.52.23-1.04.3-1.56l.02-.13c.04-.49.03-.96-.04-1.42z"/></svg>`,
+  stripe: `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M14 8.38c0-.62-.49-.88-1.3-.88-.96 0-2.31.33-3.37.88l-.68-2.22c1.28-.6 2.96-.97 4.42-.97 2.82 0 4.54 1.34 4.54 3.76 0 2.91-3.87 3.44-3.87 4.52 0 .4.34.56 1 .56.98 0 2.4-.44 3.49-1l.65 2.22c-1.36.73-3.16 1.1-4.53 1.1-2.91 0-4.66-1.39-4.66-3.79 0-3.08 3.96-3.6 3.96-4.7zm-4.32-3.14L12.45.52h3.61L13.3 5.24h-3.62zM2.85 8.52h3.61v11.2H2.85V8.52zm15.42 0h3.61v11.2h-3.61V8.52z"/></svg>`,
+  supabase: `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M21.36 10.1H13.6V1.5a.5.5 0 0 0-.8-.39L2.16 11.23a.75.75 0 0 0 .52 1.27h7.77v8.61a.5.5 0 0 0 .8.39l10.62-10.12a.75.75 0 0 0-.51-1.28z"/></svg>`,
+  go: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 12a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm0 0v4M6 6h12M6 18h12"/></svg>`
+};
 ---
 
 <section class="w-full py-12 border-t border-b border-border-custom bg-bg-card/20 backdrop-blur-sm overflow-hidden relative">
-  <!-- Efecto de difuminado lateral (Fade) para máxima elegancia editorial -->
+  <!-- Efecto de difuminado lateral (Fade) -->
   <div class="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none"></div>
   <div class="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none"></div>
 
@@ -24,9 +36,18 @@ const technologies = [
     <!-- Bloque 1 (Original) -->
     <div class="flex items-center gap-16 px-8 animate-marquee whitespace-nowrap">
       {technologies.map((tech) => (
-        <div class="flex items-center gap-3 group/item cursor-default select-none">
-          {/* Indicador geométrico minimalista en lugar de logos SVG pesados/rotos */}
-          <div class={`h-2.5 w-2.5 rotate-45 border transition-all duration-300 group-hover/item:rotate-90 ${tech.isAccent ? 'bg-accent border-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]' : 'border-gray-600 bg-transparent group-hover/item:border-soft-white'}`}></div>
+        <div class="flex items-center gap-4 group/item cursor-default select-none">
+          
+          <!-- Contenedor del Icono Tecnológico Autoadaptable -->
+          <div 
+            class={`flex items-center justify-center p-2 rounded-lg transition-all duration-300 group-hover/item:scale-110 ${
+              tech.isAccent 
+                ? 'text-accent bg-accent/5 shadow-[0_0_15px_rgba(var(--accent-rgb),0.15)] border border-accent/20' 
+                : 'text-gray-500 bg-gray-900/40 border border-gray-800/40 group-hover/item:text-soft-white group-hover/item:border-gray-700'
+            }`}
+            set:html={icons[tech.id as keyof typeof icons]}
+          />
+
           <div class="flex flex-col">
             <span class="text-sm md:text-base font-mono font-bold text-gray-400 group-hover/item:text-soft-white transition-colors duration-300 tracking-tight">
               {tech.name}
@@ -42,8 +63,18 @@ const technologies = [
     <!-- Bloque 2 (Espejo exacto para el loop infinito seamless) -->
     <div class="flex items-center gap-16 px-8 animate-marquee whitespace-nowrap" aria-hidden="true">
       {technologies.map((tech) => (
-        <div class="flex items-center gap-3 group/item cursor-default select-none">
-          <div class={`h-2.5 w-2.5 rotate-45 border transition-all duration-300 group-hover/item:rotate-90 ${tech.isAccent ? 'bg-accent border-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]' : 'border-gray-600 bg-transparent group-hover/item:border-soft-white'}`}></div>
+        <div class="flex items-center gap-4 group/item cursor-default select-none">
+          
+          <!-- Contenedor del Icono Tecnológico Espejo -->
+          <div 
+            class={`flex items-center justify-center p-2 rounded-lg transition-all duration-300 group-hover/item:scale-110 ${
+              tech.isAccent 
+                ? 'text-accent bg-accent/5 shadow-[0_0_15px_rgba(var(--accent-rgb),0.15)] border border-accent/20' 
+                : 'text-gray-500 bg-gray-900/40 border border-gray-800/40 group-hover/item:text-soft-white group-hover/item:border-gray-700'
+            }`}
+            set:html={icons[tech.id as keyof typeof icons]}
+          />
+
           <div class="flex flex-col">
             <span class="text-sm md:text-base font-mono font-bold text-gray-400 group-hover/item:text-soft-white transition-colors duration-300 tracking-tight">
               {tech.name}
@@ -60,21 +91,15 @@ const technologies = [
 </section>
 
 <style>
-  /* Animación nativa de alta eficiencia (ejecutada en la GPU) */
   @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
   }
 
   .animate-marquee {
-    animation: marquee 25s linear infinite;
+    animation: marquee 30s linear infinite; /* Bajado sutilmente a 30s para apreciar mejor los íconos */
   }
 
-  /* Pausar la marquesina al hacer hover general para facilitar la lectura técnica */
   .flex:hover .animate-marquee {
     animation-play-state: paused;
   }
